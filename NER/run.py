@@ -35,7 +35,6 @@ parser.add_argument('--model_name', default='BiLSTM', type=str, help='model name
 if __name__ == '__main__':
     args = parser.parse_args()
 
-    embedding = 'embedding_SougouNews.npz'
     model_name = args.model_name
 
     struct_file = import_module('models.' + model_name)
@@ -54,10 +53,13 @@ if __name__ == '__main__':
     test_X, test_y = get_X_and_Y_data(test_data, config.max_len, len(tag_to_id))
 
     model = struct_file.MyModel(config, embedding_pretrained)
+
+    model.build(input_shape=(None, config.max_len))
+
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
     callbacks = [
         tf.keras.callbacks.ModelCheckpoint(filepath=config.save_path, save_best_only=True),
-        tf.keras.callbacks.EarlyStopping(patience=5, min_delta=1e-3)
+        # tf.keras.callbacks.EarlyStopping(patience=5, min_delta=1e-3)
     ]
 
     history = model.fit(

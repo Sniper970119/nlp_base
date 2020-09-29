@@ -39,7 +39,7 @@ class Config():
         self.tags_num = 13  # O*1  LOC*4   PER*4  ORG*4 (B I E S)
 
         self.dropout = 0.5
-        self.num_epochs = 10
+        self.num_epochs = 20
         self.max_len = 200
         self.learning_rate = 1e-3
         self.hidden_size = 128

@@ -272,6 +272,17 @@ def get_X_and_Y_data(dataset, max_len, num_classes):
     return x_data, y_data
 
 
+def format_result(chars, tags):
+    """
+    将网络输出转换为字典格式
+    :param chars:
+    :param tags:
+    :return:
+    """
+    return {}
+    pass
+
+
 if __name__ == '__main__':
     sentences = load_sentences(r'./data/dev.txt')
     bioes_tag = change_bio_to_bioes(sentences)
