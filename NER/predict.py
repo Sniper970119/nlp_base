@@ -76,5 +76,3 @@ if __name__ == '__main__':
         entities_result = format_result(list(text), [id_to_tag[id] for id in viterbi_path])
         print(json.dumps(entities_result, indent=4, ensure_ascii=False))
 
-# 齐雨洁来自大连交通大学，是个傻子
-# 我们变而以书会友，以书结缘，把欧美、港台流行的食品类图谱、画册、工具书汇集一堂。

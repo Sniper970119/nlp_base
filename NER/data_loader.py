@@ -272,6 +272,33 @@ def get_X_and_Y_data(dataset, max_len, num_classes):
     return x_data, y_data
 
 
+def check_label(front_label, follow_label):
+    """
+    检查标签前后是否连贯
+    :param front_label:
+    :param follow_label:
+    :return:
+    """
+    tag_check = {
+        "I": ["B", "I"],
+        "E": ["B", "I"],
+    }
+    if not follow_label:
+        raise Exception("follow label should not both None")
+
+    if not front_label:
+        return True
+
+    if follow_label.startswith("B-"):
+        return False
+
+    if (follow_label.startswith("I-") or follow_label.startswith("E-")) and \
+            front_label.endswith(follow_label.split("-")[1]) and \
+            front_label.split("-")[0] in tag_check[follow_label.split("-")[0]]:
+        return True
+    return False
+
+
 def format_result(chars, tags):
     """
     将网络输出转换为字典格式
@@ -279,8 +306,29 @@ def format_result(chars, tags):
     :param tags:
     :return:
     """
-    return {}
-    pass
+    entities = []
+    entity = []
+    for index, (char, tag) in enumerate(zip(chars, tags)):
+        entity_continue = check_label(tags[index - 1] if index > 0 else None, tag)
+        if not entity_continue and entity:
+            entities.append(entity)
+            entity = []
+        entity.append([index, char, tag, entity_continue])
+    if entity:
+        entities.append(entity)
+
+    entities_result = []
+    for entity in entities:
+        if entity[0][2].startswith("B-"):
+            entities_result.append(
+                {"begin": entity[0][0] + 1,
+                 "end": entity[-1][0] + 1,
+                 "words": "".join([char for _, char, _, _ in entity]),
+                 "type": entity[0][2].split("-")[1]
+                 }
+            )
+
+    return entities_result
 
 
 if __name__ == '__main__':
