@@ -27,3 +27,6 @@ from generate.models import decoder
 class GRUDecoder(decoder):
     def __init__(self):
         super(GRUDecoder, self).__init__()
+
+    def call(self,x):
+        pass
