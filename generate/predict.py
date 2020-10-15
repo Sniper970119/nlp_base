@@ -152,7 +152,7 @@ if __name__ == '__main__':
         print('Predicted translation: {}'.format(result))
 
         attention_plot = attention_plot[:len(result.split(' ')), :len(sentence.split(' '))]
-        plot_attention(attention_plot, sentence.split(' '), result.split(' '))
+        # plot_attention(attention_plot, sentence.split(' '), result.split(' '))
 
 
     checkpoint.restore(tf.train.latest_checkpoint(config.save_path))

@@ -115,13 +115,13 @@ if __name__ == '__main__':
             total_loss += batch_loss
 
             if batch % 50 == 0:
-                print('Epoch {} Batch {} Loss {:.4f}'.format(epoch + 1,
+                print('Epoch {} Batch {} Loss {}'.format(epoch + 1,
                                                              batch,
                                                              batch_loss.numpy()))
         # 每 2 个周期（epoch），保存（检查点）一次模型
-        if (epoch + 1) % 2 == 0:
+        if (epoch + 1) % 1 == 0:
             checkpoint.save(file_prefix=config.save_path)
 
-        print('Epoch {} Loss {:.4f}'.format(epoch + 1,
+        print('Epoch {} Loss {}'.format(epoch + 1,# :.8f
                                             total_loss / config.steps_per_epoch))
         print('Time taken for 1 epoch {} sec\n'.format(time.time() - start))
