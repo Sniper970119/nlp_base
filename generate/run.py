@@ -119,7 +119,7 @@ if __name__ == '__main__':
                                                              batch,
                                                              batch_loss.numpy()))
         # 每 2 个周期（epoch），保存（检查点）一次模型
-        if (epoch + 1) % 1 == 0:
+        if (epoch + 1) % 5 == 0:
             checkpoint.save(file_prefix=config.save_path)
 
         print('Epoch {} Loss {}'.format(epoch + 1,# :.8f

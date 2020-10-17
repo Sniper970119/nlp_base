@@ -32,8 +32,8 @@ class Config():
         self.test_path = './data/test.txt'
         self.save_path = './output/' + self.model_name + '.ckpt'
 
-        self.num_samples = 1000000
-        self.num_epochs = 50
+        self.num_samples = 50000
+        self.num_epochs = 10
         self.batch_size = 64
         self.embedding_dim = 300
         self.hidden_size = 256

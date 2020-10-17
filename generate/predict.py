@@ -155,6 +155,10 @@ if __name__ == '__main__':
         # plot_attention(attention_plot, sentence.split(' '), result.split(' '))
 
 
+    config.save_path = r'./output/'
     checkpoint.restore(tf.train.latest_checkpoint(config.save_path))
+    # checkpoint.restore(r'./generate/output/seq2seq_attention.ckpt')
+
 
     predict(u'晚 风 摇 树 树 还 挺')
+    predict(u'雪 盖 冰 封 春 潜 底')
