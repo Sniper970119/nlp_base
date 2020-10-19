@@ -23,7 +23,7 @@ import tensorflow as tf
 import os
 import time
 from importlib import import_module
-from summary.utils import build_dataset, get_time_dif, build_net_data
+from classisify.utils import build_dataset, get_time_dif, build_net_data
 import argparse
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -31,7 +31,7 @@ for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
 
 parser = argparse.ArgumentParser(description='model config')
-parser.add_argument('--model', default='text_LSTM_2', type=str)
+parser.add_argument('--model', default='text_LSTM_1', type=str)
 parser.add_argument('--word', default=False, type=bool)
 args = parser.parse_args()
 
