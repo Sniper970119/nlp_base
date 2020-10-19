@@ -18,14 +18,13 @@
           ┃ ┫ ┫   ┃ ┫ ┫
           ┗━┻━┛   ┗━┻━┛
 """
-
 import tensorflow as tf
-import tensorflow_addons as tf_ad
 
+class Config(object):
 
-class config():
+    """配置参数"""
     def __init__(self):
-        self.model_name = 'BiLSTMCRF'
+        self.model_name = 'BilSTMCRF'
         self.train_path = r'./data/train.txt'
         self.dev_path = r'./data/dev.txt'
         self.test_path = r'./data/test.txt'
@@ -45,38 +44,26 @@ class config():
         self.learning_rate = 1e-3
         self.hidden_size = 128
 
-
 class MyModel(tf.keras.Model):
-    def __init__(self, config, embedding_pretrained=None):
+    def __init__(self, config):
         super(MyModel, self).__init__()
-        if embedding_pretrained is None:
-            self.embedding = tf.keras.layers.Embedding(config.n_vocab, config.embsize)
-        else:
-            self.embedding = tf.keras.layers.Embedding(input_dim=embedding_pretrained.shape[0],
-                                                       output_dim=embedding_pretrained.shape[1],
-                                                       input_length=config.max_len,
-                                                       weights=[embedding_pretrained],
-                                                       trainable=True
-                                                       )
-        self.BiLSTM = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=config.hidden_size,
-                                                                         return_sequences=True,
-                                                                         activation='relu'
-                                                                         ))
-        self.dropout = tf.keras.layers.Dropout(config.dropout)
-        self.out = tf.keras.layers.Dense(config.tags_num, activation='softmax')
+        self.transition_params = None
 
-        # CRF
+        self.embedding = tf.keras.layers.Embedding(config.n_vocab, config.embsize)
+        self.biLSTM = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(config.hidden_size, return_sequences=True))
+        self.dense = tf.keras.layers.Dense(config.tags_num)
+
         self.transition_params = tf.Variable(tf.random.uniform(shape=(config.tags_num, config.tags_num)),
                                              trainable=False)
         self.dropout = tf.keras.layers.Dropout(config.dropout)
 
-    def call(self, text, labels=None):
+    def call(self, text,labels=None,training=None):
         x = tf.math.not_equal(text, 0)
         x = tf.cast(x, dtype=tf.int32)
         text_lens = tf.math.reduce_sum(x, axis=-1)
         # -1 change 0
         inputs = self.embedding(text)
-        inputs = self.dropout(inputs)
+        inputs = self.dropout(inputs, training)
         inputs = self.biLSTM(inputs)
         logits = self.dense(inputs)
 

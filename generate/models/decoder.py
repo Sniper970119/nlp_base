@@ -30,7 +30,3 @@ class Decoder(tf.keras.Model):
         self.dec_units = dec_units
         self.batch_size = batch_size
 
-
-
-    def test(self):
-        print(self.vovab_size)

@@ -30,7 +30,7 @@ for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
 
 parser = argparse.ArgumentParser(description='Chinese NER')
-parser.add_argument('--model_name', default='BiLSTM', type=str, help='model name')
+parser.add_argument('--model_name', default='BiLSTMCRF', type=str, help='model name')
 
 if __name__ == '__main__':
     args = parser.parse_args()

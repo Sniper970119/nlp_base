@@ -31,7 +31,7 @@ class GRUEncoder(Encoder):
         self.gru = tf.keras.layers.GRU(self.enc_units,
                                        return_sequences=True,
                                        return_state=True,
-                                       )  # recurrent_initializer='glorot_uniform')
+                                       )
 
     def call(self, x, hidden):
         x = self.embedding(x)

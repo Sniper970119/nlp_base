@@ -33,7 +33,7 @@ class GRUDecoder(Decoder):
         self.GRU = tf.keras.layers.GRU(self.dec_units,
                                        return_sequences=True,
                                        return_state=True,
-                                       )  ##  recurrent_initializer='glorot_uniform')1
+                                       )
         self.fc = tf.keras.layers.Dense(vocab_size)
         self.attention = BahdanauAttention(self.dec_units)
 
