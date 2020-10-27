@@ -82,6 +82,7 @@ def create_look_ahead_mark(size):
     :param size:
     :return:
     """
+    # 生成一个下三角矩阵
     mark = 1 - tf.linalg.band_part(tf.ones((size, size)), -1, 0)
     return mark
 

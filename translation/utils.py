@@ -72,11 +72,10 @@ def get_text_idx(text, en_tokenizer=None, zh_tokenizer=None, flag='en', padding_
     return tensor
 
 
-def load_dataset(path, config, num_example=None):
+def load_dataset(path, num_example=None):
     """
     创建数据集
     :param path:
-    :param config:
     :param num_example:
     :return:
     """
