@@ -51,7 +51,7 @@ if __name__ == '__main__':
         _loss = loss_object(y_true, y_pred)
 
         mask = tf.cast(mask, dtype=_loss.dtype)
-        _loss += mask
+        _loss *= mask
         return tf.reduce_mean(_loss)
 
 
@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     if ckpt_manager.latest_checkpoint:
         ckpt.restore(ckpt_manager.latest_checkpoint)
-        print('last checkpoit restore')
+        print('last checkpoint restore')
 
 
     def train_step(inputs, targets):
@@ -113,18 +113,18 @@ if __name__ == '__main__':
         for batch, (inputs, targets) in enumerate((dataset)):
             train_step(inputs, targets)
 
-        #     if batch % 200 == 0:
-        #         print('epoch {}, batch {}, loss:{:.4f}, acc:{:.4f}'.format(
-        #             epoch + 1, batch, train_loss.result(), train_acc.result()
-        #         ))
-        # if (epoch + 1) % 2 == 0:
-        #     ckpt_save_path = ckpt_manager.save()
-        #     print('epoch {}, save model at {}'.format(
-        #         epoch + 1, ckpt_save_path
-        #     ))
-        #
-        # print('epoch {}, loss:{:.4f}, acc:{:.4f}'.format(
-        #     epoch + 1, train_loss.result(), train_acc.result()
-        # ))
-        #
-        # print('time in 1 epoch:{} secs\n'.format(time.time() - start))
+            if batch % 200 == 0:
+                print('epoch {}, batch {}, loss:{:.4f}, acc:{:.4f}'.format(
+                    epoch + 1, batch, train_loss.result(), train_acc.result()
+                ))
+        if (epoch + 1) % 2 == 0:
+            ckpt_save_path = ckpt_manager.save()
+            print('epoch {}, save model at {}'.format(
+                epoch + 1, ckpt_save_path
+            ))
+
+        print('epoch {}, loss:{:.4f}, acc:{:.4f}'.format(
+            epoch + 1, train_loss.result(), train_acc.result()
+        ))
+
+        print('time in 1 epoch:{} secs\n'.format(time.time() - start))

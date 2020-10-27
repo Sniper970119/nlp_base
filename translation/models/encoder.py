@@ -28,7 +28,7 @@ from translation.models.model_utils import *
 
 class Encoder(tf.keras.layers.Layer):
     def __init__(self, n_layers, d_model, n_heads, ddf, input_vocab_size, max_seq_len, dropout_rate=0.1):
-        super().__init__()
+        super(Encoder, self).__init__()
 
         self.n_layers = n_layers
         self.d_model = d_model

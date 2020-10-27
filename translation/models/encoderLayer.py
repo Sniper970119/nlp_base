@@ -34,7 +34,7 @@ class EncoderLayer(tf.keras.layers.Layer):
         :param ddf: ffn的隐藏层个数
         :param dropout_rate:
         """
-        super().__init__()
+        super(EncoderLayer, self).__init__()
         self.muti_head_attn = MutiHeadAttention(d_model, n_heads)
         self.ffn = feed_forward_network(d_model, ddf)
 
@@ -53,6 +53,7 @@ class EncoderLayer(tf.keras.layers.Layer):
         ffn_output = self.dropout2(ffn_output, training=training)
         out2 = self.layerNorm2(out1 + ffn_output)
         return out2
+
 
 if __name__ == '__main__':
     sample_encoder_layer = EncoderLayer(512, 8, 2048)

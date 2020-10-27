@@ -34,7 +34,7 @@ class DecoderLayer(tf.keras.layers.Layer):
         :param dff:
         :param dropout_rate:
         """
-        super().__init__()
+        super(DecoderLayer, self).__init__()
 
         self.muti_head_attn1 = MutiHeadAttention(d_model, n_heads)
         self.muti_head_attn2 = MutiHeadAttention(d_model, n_heads)

@@ -74,8 +74,8 @@ class MutiHeadAttention(tf.keras.layers.Layer):
         attention_output = tf.transpose(attention_output, perm=[0, 2, 1, 3])
         attention_output = tf.reshape(attention_output, (batch_size, -1, self.d_model))
 
-        output = self.dense(attention_output)
-        return output, attention_weight
+        _output = self.dense(attention_output)
+        return _output, attention_weight
 
 
 def dot_attention(q, k, v, mask):
@@ -98,8 +98,8 @@ def dot_attention(q, k, v, mask):
 
     attention_weights = tf.nn.softmax(scaled_attention_logits, axis=-1)
 
-    output = tf.matmul(attention_weights, v)
-    return output, attention_weights
+    _output = tf.matmul(attention_weights, v)
+    return _output, attention_weights
 
 
 if __name__ == '__main__':
