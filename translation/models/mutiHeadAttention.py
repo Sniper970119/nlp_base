@@ -62,8 +62,8 @@ class MutiHeadAttention(tf.keras.layers.Layer):
         batch_size = tf.shape(q)[0]
 
         q = self.WQ(q)
-        k = self.WQ(k)
-        v = self.WQ(v)
+        k = self.WK(k)
+        v = self.WV(v)
 
         q = self.split_heads(q, batch_size)
         k = self.split_heads(k, batch_size)
@@ -78,6 +78,8 @@ class MutiHeadAttention(tf.keras.layers.Layer):
         return _output, attention_weight
 
 
+#
+#
 def dot_attention(q, k, v, mask):
     """
     点乘
@@ -103,7 +105,9 @@ def dot_attention(q, k, v, mask):
 
 
 if __name__ == '__main__':
-    temp_mha = MutiHeadAttention(d_model=512, num_heads=8)
-    y = tf.random.uniform((1, 60, 512))
-    output, att = temp_mha(y, y, y, mask=None)
-    print(output.shape, att.shape)
+    # temp_mha = MutiHeadAttention(d_model=512, num_heads=8)
+    # y = tf.random.uniform((1, 60, 512))
+    # output, att = temp_mha(y, y, y, mask=None)
+    # print(output.shape, att.shape)
+
+    pass

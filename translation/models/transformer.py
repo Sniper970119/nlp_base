@@ -28,10 +28,10 @@ class Config():
     def __init__(self):
         self.model_name = 'transformer'
         self.epochs = 20
-        self.learning_rate = 1e7
-        self.batch_size = 4
+        self.learning_rate = 1e9
+        self.batch_size = 32
 
-        self.num_layers = 2
+        self.num_layers = 4
         self.d_model = 128
         self.dff = 512
         self.num_heads = 8
@@ -42,7 +42,7 @@ class Config():
         self.max_seq_len = 50
         self.dropout_rate = 0.1
 
-        self.save_path = 'output/' + self.model_name + '.ckpt'
+        self.save_path = 'output/'
 
 
 class Transformer(tf.keras.layers.Layer):

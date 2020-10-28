@@ -54,7 +54,7 @@ class DecoderLayer(tf.keras.layers.Layer):
         attn1 = self.dropout1(attn1, training=training)
         out1 = self.layerNorm1(inputs + attn1)
 
-        attn2, attn2_weight = self.muti_head_attn2(inputs, inputs, inputs, padding_mask)
+        attn2, attn2_weight = self.muti_head_attn2(inputs, encoder_out, encoder_out, padding_mask)
         attn2 = self.dropout2(attn2, training=training)
         out2 = self.layerNorm2(out1 + attn2)
 
@@ -67,6 +67,7 @@ class DecoderLayer(tf.keras.layers.Layer):
 
 if __name__ == '__main__':
     from translation.models.encoderLayer import EncoderLayer
+
     sample_encoder_layer = EncoderLayer(512, 8, 2048)
     sample_encoder_layer_output = sample_encoder_layer(
         tf.random.uniform((64, 43, 512)), False, None)
