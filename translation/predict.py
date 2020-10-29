@@ -54,8 +54,22 @@ if __name__ == '__main__':
 
     # optimizer = tf.keras.optimizers.Adam(config.learning_rate)
     ckpt = tf.train.Checkpoint(transformer=transformer, optimizer=optimizer)
-    ckpt_manager = tf.train.CheckpointManager(ckpt, config.save_path, max_to_keep=3)
+    # ckpt_manager = tf.train.CheckpointManager(ckpt, config.save_path, max_to_keep=3)
+    #
+    # if ckpt_manager.latest_checkpoint:
+    #     ckpt.restore(ckpt_manager.latest_checkpoint)
+    #     print('last checkpoint restore')
+    # transformer.build(input_shape=(None, 50))
+    # transformer.load_weights(r'/output/')
+    config.save_path = r'./output/'
+    ckpt.restore(tf.train.latest_checkpoint(config.save_path))
+    # config.save_path = r'./output/'
+    # ckpt.restore(tf.train.latest_checkpoint(config.save_path))
+    preds = transformer.evaluate(val_input_text, val_target_text, batch_size=64)
 
-    if ckpt_manager.latest_checkpoint:
-        ckpt.restore(ckpt_manager.latest_checkpoint)
-        print('last checkpoint restore')
+    # test_text = '<BOS>hello world !<EOS>'
+    # text_tensor = en_tokenizer.texts_to_sequences([[test_text]])
+    # text_tensor = tf.keras.preprocessing.sequence.pad_sequences(text_tensor, maxlen=50, padding='post')
+    #
+    # res = transformer.predict(text_tensor)
+    print()

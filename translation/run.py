@@ -135,7 +135,7 @@ if __name__ == '__main__':
                 print('epoch {}, batch {}, loss:{:.4f}, acc:{:.4f}'.format(
                     epoch + 1, batch, train_loss.result(), train_acc.result()
                 ))
-        if (epoch + 1) % 2 == 0:
+        if (epoch + 1) % 1 == 0:
             ckpt_save_path = ckpt_manager.save()
             print('epoch {}, save model at {}'.format(
                 epoch + 1, ckpt_save_path

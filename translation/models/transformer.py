@@ -27,7 +27,7 @@ from translation.models.decoder import Decoder
 class Config():
     def __init__(self):
         self.model_name = 'transformer'
-        self.epochs = 20
+        self.epochs = 10
         self.learning_rate = 1e9
         self.batch_size = 32
 
@@ -45,7 +45,7 @@ class Config():
         self.save_path = 'output/'
 
 
-class Transformer(tf.keras.layers.Layer):
+class Transformer(tf.keras.Model):
     def __init__(self, n_layers, d_model, n_heads, diff, input_vocab_size, target_vocab_size, max_seq_len,
                  dropout_rate=0.1):
         super(Transformer, self).__init__()
