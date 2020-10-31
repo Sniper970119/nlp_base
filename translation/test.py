@@ -33,7 +33,7 @@ from translation.models.model_utils import *
 
 if __name__ == '__main__':
     test_text = "Where do you work now ?"
-    target_text = "你 现在 在 哪里 工作 ？"
+    target_text = "<BOS>"
     data = tuple([add_BOS_and_EOS(test_text)])
     target_data = tuple([add_BOS_and_EOS(target_text)])
 
