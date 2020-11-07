@@ -12,34 +12,26 @@
         ┃　　　┃   神兽保佑
         ┃　　　┃   代码无BUG！
         ┃　　　┗━━━━━━━━━┓
-        ┃　　　　　　　    ┣┓
+        ┃CREATE BY SNIPER┣┓
         ┃　　　　         ┏┛
         ┗━┓ ┓ ┏━━━┳ ┓ ┏━┛
           ┃ ┫ ┫   ┃ ┫ ┫
           ┗━┻━┛   ┗━┻━┛
-"""
 
+"""
 import tensorflow as tf
 
+for gpu in tf.config.experimental.list_physical_devices('GPU'):
+    tf.config.experimental.set_memory_growth(gpu, True)
 
-def load_file(file_name):
-    with open(file_name, 'r', encoding='utf-8') as f:
-        data_line = f.read()
-    data_line = data_line.split('\n')
-    text = []
-    label = []
-    for each in data_line:
-        a, b = each.split('\t')
-        text.append(a)
-        label.append(b)
-    return text, label
+from transformers import TFBertForSequenceClassification, BertTokenizer
 
-
-def load_data(config):
-    train_text, train_label = load_file(config.train_path)
-    dev_text, dev_label = load_file(config.dev_path)
-    test_text, test_label = load_file(config.test_path)
-
-    tokenizer = config.tokenizer
-
-    # train_text = tokenizer
+tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
+model = TFBertForSequenceClassification.from_pretrained('bert-base-cased', return_dict=True)
+inputs = tokenizer("hello,my dog is cute", return_tensors='tf')
+inputs['labels'] = tf.reshape(tf.constant(1), (-1, 1))
+outputs = model(inputs)
+loss = outputs.loss
+logits = outputs.logits
+print(loss)
+print(logits)
