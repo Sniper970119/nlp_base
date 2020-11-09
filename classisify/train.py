@@ -61,7 +61,7 @@ if __name__ == '__main__':
         tf.keras.callbacks.EarlyStopping(patience=5, min_delta=1e-3)
     ]
 
-    history = model.fit(x=train_x, y=train_y, validation_data=(dev_x, dev_y), batch_size=512, epochs=2,
+    history = model.fit(x=train_x, y=train_y, validation_data=(dev_x, dev_y), batch_size=32, epochs=2,
                         callbacks=callbacks)
     print(history.history)
     preds = model.evaluate(test_x, test_y, batch_size=64)

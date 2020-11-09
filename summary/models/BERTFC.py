@@ -28,19 +28,19 @@ class Config():
     def __init__(self):
         self.model_name = 'BERT+FC'
 
-        self.train_path = r'/data/train.txt'
+        self.train_path = r'./data/train.txt'
 
-        self.test_path = r'/data/test.txt'
+        self.test_path = r'./data/test.txt'
 
-        self.val_path = r'/data/dev.txt'
+        self.dev_path = r'./data/dev.txt'
 
-        self.save_pkl = '/data/dataset.pkl'
+        self.save_pkl = './data/dataset.pkl'
 
-        self.tokenizer = transformers.BertTokenizer.from_pretrained('')
+        self.tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-chinese')
 
         self.class_list = []
 
-        with open('/data/class.txt', 'r', encoding='utf-8') as f:
+        with open('./data/class.txt', 'r', encoding='utf-8') as f:
             self.class_list = [x.strip() for x in f.readlines()]
 
         self.save_path = 'output' + self.model_name + '.ckpt'
@@ -57,5 +57,18 @@ class Config():
 
 
 class BERTFC(tf.keras.Model):
-    def __init__(self):
+    def __init__(self, config):
         super(BERTFC, self).__init__()
+
+        self.bert = transformers.TFBertModel.from_pretrained('bert-base-chinese', return_dict=True)
+        self.dense = tf.keras.layers.Dense(config.num_classes)
+
+    def call(self, inputs):
+        output = self.bert(inputs)
+        output = self.dense(output.pooler_output)
+        return output
+        # embedding, cls_token2= self.bert(inputs)
+        # cls_token = embedding[:, 0, :]
+        # output = self.fc(cls_token)
+
+        # return output
