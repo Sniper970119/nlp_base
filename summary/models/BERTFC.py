@@ -68,7 +68,7 @@ class BERTFC(tf.keras.Model):
         output = self.dense(output.pooler_output)
         return output
         # embedding, cls_token2= self.bert(inputs)
-        # cls_token = embedding[:, 0, :]
+        # cls_token = embedding[:, 0, :];
         # output = self.fc(cls_token)
 
         # return output
